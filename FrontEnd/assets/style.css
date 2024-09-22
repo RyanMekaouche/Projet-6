@@ -186,3 +186,13 @@ footer nav ul {
 	margin: 2em
 }
 
+button.active{
+	background-color: green;
+}
+
+.portfolio-categories{
+	display: flex;
+	justify-content: center;
+	gap: 5px;
+	margin: 10px 0px 20px 0px;
+}

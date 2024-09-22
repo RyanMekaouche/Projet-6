@@ -1,5 +1,3 @@
-const { forEach } = require("lodash");
-const { categories } = require("../Backend/models");
 
 async function getWorks() {
     const reponse = await fetch("http://localhost:5678/api/works");
@@ -32,18 +30,48 @@ displayWorks();
 //***Creation des boutton***//
 
 async function getCategories() {
-    const reponse = await fetch ("http://localhost:5678/api/categories")
+    const reponse = await fetch("http://localhost:5678/api/categories")
     return await reponse.json();
 }
 
+let currentCategory = "Tous"
+async function handleCategory(name){
+    const categories = await getCategories();
+    const selectedCategory = categories.find(category => category.name === name)    
+    console.log(selectedCategory)
+    // récuperer tout les boutons et verifier si le selectedCategory.name === btn.textContent alors lui ajouter la classe "active" et supprimer cette meme classe sur toutes les autres boutons si elle est présente dans la classList, et afficher les works en verifiant que si selectedCategory.id === work.category.id
+}
+
+handleCategory()
+
 async function displayCategoriesButton() {
     const categories = await getCategories();
-    categories.forEach((categorie) => {
+    const portfolioCategories = document.querySelector(".portfolio-categories")
     const btn = document.createElement("button")
-    btn.textContent = categories.name.ToUpperCase();
-    btn.id = categories.id;
+    btn.textContent = "Tous";
+    btn.className = "active";
+    btn.addEventListener("click",() => handleCategory())
+    portfolioCategories.appendChild(btn)
+    categories.forEach((categorie) => {
+        const btn = document.createElement("button")
+        btn.textContent = categorie.name;
+        btn.addEventListener("click",() => handleCategory(categorie.name))
+        portfolioCategories.appendChild(btn)
     })
 }
 
 displayCategoriesButton();
 getCategories();
+
+//filtrer au click sur le bouton par catégorie//
+
+async function filtrerCategories() {
+    const decoration = await getCategories();
+    const buttons = document.querySelectorAll(".portfolio-categories button")
+    buttons.forEach(button => {
+        button.addEventListener("click",(e)=>{
+            console.log("coucou");
+        })
+    });
+}
+filtrerCategories()
