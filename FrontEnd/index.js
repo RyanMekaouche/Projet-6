@@ -1,4 +1,6 @@
 
+const gallery = document.querySelector(".gallery")
+
 async function getWorks() {
     const reponse = await fetch("http://localhost:5678/api/works");
     const works = await reponse.json();
@@ -7,8 +9,7 @@ async function getWorks() {
 
 getWorks();
 
-async function displayWorks() {
-    const gallery = document.querySelector(".gallery")
+async function displayWorks(work) {
     const works = await getWorks()
     for (let index = 0; index < works.length; index++) {
         const work = works[index];
@@ -24,6 +25,19 @@ async function displayWorks() {
     }
 }
 
+async function displayWork(work) {    
+        const figureElement = document.createElement("figure")
+        const figureImgElement = document.createElement("img")
+        figureImgElement.src = work.imageUrl
+        figureImgElement.alt = work.title
+        const figureCaptionElement = document.createElement("figcaption")
+        figureCaptionElement.textContent = work.title
+        figureElement.appendChild(figureImgElement)
+        figureElement.appendChild(figureCaptionElement)
+        gallery.appendChild(figureElement)
+    
+}
+
 displayWorks();
 
 
@@ -37,11 +51,11 @@ async function getCategories() {
 let currentCategory = "Tous"
 async function handleCategory(name){
     const categories = await getCategories();
-    const selectedCategory = categories.find(category => category.name === name)    
+    const selectedCategory = categories.find((category) => category.name === name); 
+    const buttonTri = document.querySelectorAll(".portfolio-categories button")
     console.log(selectedCategory)
     // récuperer tout les boutons et verifier si le selectedCategory.name === btn.textContent alors lui ajouter la classe "active" et supprimer cette meme classe sur toutes les autres boutons si elle est présente dans la classList, et afficher les works en verifiant que si selectedCategory.id === work.category.id
 }
-
 handleCategory()
 
 async function displayCategoriesButton() {
@@ -55,23 +69,37 @@ async function displayCategoriesButton() {
     categories.forEach((categorie) => {
         const btn = document.createElement("button")
         btn.textContent = categorie.name;
-        btn.addEventListener("click",() => handleCategory(categorie.name))
+        btn.addEventListener("click",() => filtrerCategories(categorie.name))
         portfolioCategories.appendChild(btn)
     })
+
 }
 
 displayCategoriesButton();
 getCategories();
 
+
+
 //filtrer au click sur le bouton par catégorie//
 
-async function filtrerCategories() {
-    const decoration = await getCategories();
+async function filtrerCategories(name) {
+    console.log("filtrerCategories")
+    const displayPhoto = await getWorks();
     const buttons = document.querySelectorAll(".portfolio-categories button")
-    buttons.forEach(button => {
+    buttons.forEach((button) => {
         button.addEventListener("click",(e)=>{
-            console.log("coucou");
-        })
+    
+            if (name !== undefined){
+                 gallery.innerHTML = "";
+        const decorationTriCategory = displayPhoto.filter((work) => {
+        return name == work.category.name;
+        }
+    );
+        decorationTriCategory.forEach((work) => {
+            displayWork(work);
+        });
+        }    
+        });
     });
 }
-filtrerCategories()
+
