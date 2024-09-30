@@ -309,11 +309,21 @@ button.design {
 	color: #1D6154;
 }
 
+
 button.active {
 	background-color: #1D6154;
 	border-radius: 60px;
 	width: 130px;
 	color: #FFFEF8;
+}
+
+.category-button{
+background: white;
+border-radius: 60px;
+width: 120px;
+color: #1D6154;
+border-color:#1D6154;
+border-width: 1px;
 }
 
 /* Login page properties */
@@ -372,3 +382,32 @@ button.active {
 .login__background {
 	background-color: #FFFEF8;
 }
+
+.error{
+	box-shadow: 5px 5px 5px rgb(235, 235, 235);
+	border: block;
+	border-color: red;
+}
+
+.mode__edition{
+background-color: black;
+color: white;
+height: 40px;
+display: flex;
+justify-content: center;
+align-items: center;
+width: 100%;
+position: absolute;
+left: 0;
+top: 0;
+margin-bottom: 20px;
+}
+
+#edit{
+width: 10px;
+}
+
+.hidden{
+	visibility: hidden;
+	}
+	

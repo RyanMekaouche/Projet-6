@@ -77,7 +77,19 @@ async function handleFilterCategory(category) {
 
 
     const categories = await getCategories();
-    const selectedCategory = categories.find(item => item.id === (category&&category.id))
+    const selectedCategory = categories.find(item => item.id === (category && category.id))
     console.log(selectedCategory)
     displayWorks(selectedCategory)
 }
+
+//Mode edition//
+
+function displayEditorMode() {
+    if (sessionStorage.authToken) {
+        console.log("ok");
+        const editorMod = document.querySelector(".mode__edition.hidden")
+        editorMod.classList.remove("hidden")
+    }
+}
+displayEditorMode()
+
