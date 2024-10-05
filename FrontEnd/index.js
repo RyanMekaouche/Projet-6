@@ -89,7 +89,43 @@ function displayEditorMode() {
         console.log("ok");
         const editorMod = document.querySelector(".mode__edition.hidden")
         editorMod.classList.remove("hidden")
+        const buttonModified = document.getElementById("button__modif")
+        buttonModified.classList.remove("hidden")
+        const portfolioEdit = document.querySelector(".portfolio__edit")
+        portfolioEdit.classList.add("portfolio__edit-flex")
     }
 }
 displayEditorMode()
+
+window.onload = function () {
+    if (sessionStorage.authToken) {
+        const navLoginLink = document.getElementById("login__link")
+        navLoginLink.textContent = "logout";
+        navLoginLink.addEventListener("click", (event) => {
+            event.preventDefault()
+            sessionStorage.removeItem("authToken")
+            window.location.replace("./index.html");
+            navLoginLink.textContent = "login";
+        })
+    }
+}
+
+if (sessionStorage.authToken) {
+    const openModal = function (e){
+        e.preventDefault()
+        const target = document.querySelector(e.target.getAttribute("href"))
+        target.style.display = null
+        target.removeAttribute("aria-hidden")
+        target.setAttribute("aria-modal","true")
+    }
+    
+    document.querySelectorAll(".js-modal").forEach(a =>{
+        a.addEventListener("click", openModal)
+    })
+    }
+
+
+
+
+
 

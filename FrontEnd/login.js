@@ -1,7 +1,6 @@
 
 const loginApi = "http://localhost:5678/api/users/login";
 
-document.getElementById("login-form").addEventListener("submit", handleSubmit);
 
 async function handleSubmit(event) {
   event.preventDefault();
@@ -18,7 +17,6 @@ async function handleSubmit(event) {
     },
     body: JSON.stringify(user)
   });
-  console.log(response);
   if (response.status !== 200) {
     alert("Email ou mot de passe erronés");
   } else {
@@ -28,3 +26,9 @@ async function handleSubmit(event) {
     window.location.replace("./index.html");
   }
 };
+window.onload = function(){
+ document.getElementById("login-form").addEventListener("submit", handleSubmit);
+ if (sessionStorage.authToken){
+  window.location.replace("./index.html");
+ }
+}
